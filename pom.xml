@@ -44,7 +44,46 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>application.properties</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/resources-${build.profile.id}/</directory>
+				<includes>
+					<include>logback.xml</include>
+				</includes>
+			</resource>
+		</resources>
+		<filters>
+			<filter>src/main/resources-${build.profile.id}/profile.properties</filter>
+		</filters>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile.id>dev</build.profile.id>
+			</properties>
+		</profile>
+		<profile>
+			<id>cit</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile.id>cit</build.profile.id>
+			</properties>
+		</profile>
+	</profiles>
 
 
 </project>
